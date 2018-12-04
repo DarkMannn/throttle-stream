@@ -1,0 +1,16 @@
+{
+  "name": "you-shall-not-pass",
+  "version": "0.0.0",
+  "description": "Throttle transform stream",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "throttle",
+    "transform",
+    "stream"
+  ],
+  "author": "DarkMannn",
+  "license": "ISC"
+}
