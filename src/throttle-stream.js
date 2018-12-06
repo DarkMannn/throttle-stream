@@ -1,36 +1,57 @@
-const Fs = require('fs');
 const { Transform } = require('stream');
+const Assert = require('assert');
+
 
 class Throttle extends Transform {
 
   constructor(options) {
+    Assert(Object.values(options).every(Number.isInteger), 'Every argument in Class constructor must be an Integer');
     super(options);
-    this.config = { bytes, interval } = options;
-    this.startTime = Date.now();
+
+    Object.assign(this, options);
+    this.previousPassTime = Date.now();
     this.queue = [];
+    this.intervalId = this.shallWePassPeriodic();
   }
 
-  _transform(chunks, encoding, cb) {
+  _transform(chunks, _, cb) {
     for (const chunk of chunks) {
       this.queue.push(chunk);
     }
-    setTimeout(() => cb(null, chunk), 1);
+    this.isQueueFull() ? setTimeout(cb, this.interval) : cb();
+  }
+
+  _flush(cb) {
+    clearInterval(this.intervalId);
+    this.intervalId = this.shallWePassPeriodic(cb);
+  }
+
+  shallWePassPeriodic(cb = null) {
+    return setInterval(() => {
+      const elapsedTime = Date.now() - this.previousPassTime;
+
+      if (elapsedTime < this.interval) return;
+
+      if (this.queue.length > 0) {
+        this.push(this.getChunk());
+        this.previousPassTime += elapsedTime;
+      }
+      else if (cb) {
+        cb();
+        clearInterval(this.intervalId);
+      }
+    }, this.interval / 10);
+  }
+
+  getChunk() {
+    return Buffer.from(this.queue.splice(0, this.bytes));
+  }
+
+  isQueueFull() {
+    return this.queue.length >= 2 * this.bytes;
   }
 
 }
-const song = Fs.createReadStream('./sample/input.mp3');
-const output = Fs.createWriteStream('./sample/output.mp3');
 
-console.time(1);
-output.on('finish', () => console.timeEnd(1));
-song.pipe(new Throttle()).pipe(output);
 
-// song.on('data', chunk => {
-//   const part1 = chunk.slice(0, chunk.length / 2);
-//   const part2 = chunk.slice(chunk.length / 2);
-//   output.write(part2);
-//   output.write(part1);
-// });
-// song.on('end', output.end.bind(output));
-
-module.exports = null;
+module.exports = Throttle;
