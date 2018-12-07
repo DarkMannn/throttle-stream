@@ -1,5 +1,5 @@
 {
-  "name": "you-shall-not-pass",
+  "name": "throttle-stream",
   "version": "0.0.1",
   "description": "Throttle transform stream",
   "main": "index.js",

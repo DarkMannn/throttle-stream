@@ -1,4 +1,4 @@
-# You Shall Not Pass
+# Throttle-stream
 This is a little bit more modern throttle stream i.e. transform stream that has an ability to control ammount of data that is being passed in an unit of time.
 
 Throttle stream extends the native Transform stream class.
