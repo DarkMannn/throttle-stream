@@ -2,10 +2,19 @@ const { Transform } = require('stream');
 const Assert = require('assert');
 
 
+/**
+ * Transform stream with throttle functionality
+ * 
+ * @class
+ * @extends Transform
+ * @param {Object} options - Configuration options
+ * @param {Integer} options.bytes - Number of bytes to send in one chunk
+ * @param {Integer} options.interval - Interval for sending chunks, in miliseconds
+ */
 class Throttle extends Transform {
 
   constructor(options) {
-    Assert(Object.values(options).every(Number.isInteger), 'Every argument in Class constructor must be an Integer');
+    Assert(Object.values(options).every(Number.isInteger), 'Every argument in Throttle class constructor must be an Integer');
     super(options);
 
     Object.assign(this, options);
