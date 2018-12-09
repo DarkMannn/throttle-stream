@@ -1,11 +1,12 @@
 {
   "name": "throttle-stream",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Throttle transform stream",
   "main": "index.js",
   "scripts": {
     "test": "node test/index.js"
   },
+  "homepage": "https://github.com/DarkMannn/throttle-stream",
   "keywords": [
     "throttle",
     "transform",
