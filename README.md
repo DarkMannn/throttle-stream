@@ -4,7 +4,7 @@ This is a little bit more modern throttle stream i.e. transform stream that has 
 Throttle stream extends the native Transform stream class.
 
 ```javascript
-  const Throttle = require('you-shall-not-pass');
+  const Throttle = require('throttle-stream');
   const throttle = new Throttle({ bytes: 1000, interval: 100 });
 ```
 While creating the instance of the class, pass an object as an argument with following properties:
@@ -17,7 +17,7 @@ While creating the instance of the class, pass an object as an argument with fol
 ```
 ## Example:
 ```javascript
-  const Throttle = require('you-shall-not-pass');
+  const Throttle = require('throttle-stream');
   
   const input = getReadableStreamSomehow();
   const output = createWritableStreamSomehow();
