@@ -20,7 +20,7 @@ class Throttle extends Transform {
     Object.assign(this, options);
     this.previousPassTime = Date.now();
     this.queue = [];
-    this.intervalId = this.shallWePassPeriodic();
+    this.intervalId = this.setPushInterval();
   }
 
   _transform(chunks, _, cb) {
@@ -32,23 +32,21 @@ class Throttle extends Transform {
 
   _flush(cb) {
     clearInterval(this.intervalId);
-    this.intervalId = this.shallWePassPeriodic(cb);
+    this.intervalId = this.setPushInterval(cb);
   }
 
-  shallWePassPeriodic(cb = null) {
+  setPushInterval(cb = null) {
     return setInterval(() => {
       const elapsedTime = Date.now() - this.previousPassTime;
-
       if (elapsedTime < this.interval) return;
 
       if (this.queue.length > 0) {
         this.push(this.getChunk());
-        this.previousPassTime += elapsedTime;
+        return this.previousPassTime += elapsedTime;
       }
-      else if (cb) {
-        cb();
-        clearInterval(this.intervalId);
-      }
+      
+      clearInterval(this.intervalId);
+      return cb && cb();
     }, this.interval / 10);
   }
 
