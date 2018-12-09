@@ -5,11 +5,11 @@ const Throttle = require('../src/throttle-stream.js');
 
 const testAndLog = (options) => () => {
   try {
-    const inputSize = Fs.statSync(Path.join(process.cwd() + '/sample/input.mp3')).size;
-    const outputSize = Fs.statSync(Path.join(process.cwd() + `/sample/${options.output}.mp3`)).size;
+    const inputSize = Fs.statSync(Path.join(process.cwd() + '/test/sample/input.mp3')).size;
+    const outputSize = Fs.statSync(Path.join(process.cwd() + `/test/sample/${options.output}.mp3`)).size;
     Assert(inputSize === outputSize, 'Files do not have equal size in bytes');
   
-    Fs.unlinkSync(Path.join(process.cwd() + `/sample/${options.output}.mp3`));
+    Fs.unlinkSync(Path.join(process.cwd() + `/test/sample/${options.output}.mp3`));
     console.log(`TEST SUCCESSFULL. Options used: ${JSON.stringify(options)}`);
   } catch (err) {
     console.log(`TEST FAILED: ${err}. Options used: ${JSON.stringify(options)}`);
@@ -17,8 +17,8 @@ const testAndLog = (options) => () => {
 };
 
 const makeTest = (options) => () => {
-  const input = Fs.createReadStream(Path.join(process.cwd() + '/sample/input.mp3'));
-  const output = Fs.createWriteStream(Path.join(process.cwd() + `/sample/${options.output}.mp3`));
+  const input = Fs.createReadStream(Path.join(process.cwd() + '/test/sample/input.mp3'));
+  const output = Fs.createWriteStream(Path.join(process.cwd() + `/test/sample/${options.output}.mp3`));
   output.on('finish', testAndLog(options));
   input.pipe(new Throttle({ bytes, interval } = options)).pipe(output);
 }
