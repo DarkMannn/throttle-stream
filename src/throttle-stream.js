@@ -15,8 +15,8 @@ class Throttle extends Transform {
 
   constructor(options) {
     Assert(Object.values(options).every(Number.isInteger), 'Every argument in Throttle class constructor must be an Integer');
-    super(options);
 
+    super();
     Object.assign(this, options);
     this.previousPassTime = Date.now();
     this.queue = [];
