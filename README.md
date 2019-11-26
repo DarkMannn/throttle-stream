@@ -26,7 +26,3 @@ While creating the instance of the class, pass an object as an argument with fol
 
 ```
 This implementation will send 6000 bytes of data to the output every 1000 miliseconds.
-## Disclaimer
-Although this package works as it is inteded, it is not made for production purposes. It is not guaranteed that the sending of the data chunks will always be exactly in the same time interval as configured, possible fluctuations can happen (~5ms) due to using JavaScript timers.
-
-In some casess that is not a problem, in some it is.
