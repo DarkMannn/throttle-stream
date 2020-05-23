@@ -7,7 +7,7 @@ Throttle stream extends the native Transform stream class. You can make a new Th
   const Throttle = require('throttle-stream');
   const throttle = new Throttle({ bytes: 1000, interval: 100 });
 ```
-While creating the instance of the class, pass an object as an argument with following properties:
+While creating the instance of the class pass an object as an argument with following properties:
 
 ```javascript
   const options = {
