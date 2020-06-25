@@ -1,4 +1,4 @@
-# Throttle-stream
+# throttle-stream
 This is a more modern version of the original throttle stream i.e. transform stream that has an ability to control amount of data that is being passed in a unit of time.
 
 Throttle stream extends the native Transform stream class. You can make a new Throttle class instance this way:
